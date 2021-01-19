@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotRegistry.Contract\DotRegistry.Contract.csproj" />
+    <ProjectReference Include="..\DotRegistry.Core\DotRegistry.Core.csproj" />
+    <ProjectReference Include="..\DotRegistry.Model\DotRegistry.Model.csproj" />
+    <ProjectReference Include="..\DotRegistry.Interface\DotRegistry.Interface.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.12" />
+  </ItemGroup>
+</Project>
