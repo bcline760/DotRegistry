@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
@@ -16,8 +16,11 @@ namespace DotRegistry.Contract
 
         public string PersonalAccessToken { get; set; }
 
-        [JsonProperty("userame", Required = Required.Always)]
+        [JsonProperty("uname", Required = Required.Always)]
         public string Username { get; set; }
+
+        [JsonProperty("repos", Required = Required.Always)]
+        public List<string> Repositories { get; set; }
 
         [JsonIgnore]
         public override string[] SlugProperties => new string[] { Username, PersonalAccessToken.FirstEight() };
