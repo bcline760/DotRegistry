@@ -11,13 +11,13 @@
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="log4net" Version="2.0.12" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotRegistry.Contract\DotRegistry.Contract.csproj" />
     <ProjectReference Include="..\DotRegistry.Interface\DotRegistry.Interface.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repository\" />
-    <Folder Include="GitHub\" />
+    <Folder Include="Module\" />
   </ItemGroup>
 </Project>

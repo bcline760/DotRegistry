@@ -5,10 +5,12 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 
 using DotRegistry.Contract;
+using DotRegistry.Model.Provider;
+
 namespace DotRegistry.Model
 {
     [BsonIgnoreExtraElements, BsonDiscriminator(RootClass = true)]
-    [BsonKnownTypes(typeof(ProviderModel), typeof(ProviderPackageModel))]
+    [BsonKnownTypes(typeof(ProviderModel), typeof(UserProfileModel))]
     public abstract class DotRegistryModel
     {
         protected DotRegistryModel()

@@ -1,8 +1,9 @@
-﻿namespace DotRegistry.Model.GitHub
+﻿namespace DotRegistry.Contract.GitHub
 {
+
     using Newtonsoft.Json;
 
-    public partial class GitHubRepositoryPermissionsModel
+    public partial class GitHubPermissions
     {
         [JsonProperty("admin", Required = Required.Always)]
         public bool Admin { get; set; }

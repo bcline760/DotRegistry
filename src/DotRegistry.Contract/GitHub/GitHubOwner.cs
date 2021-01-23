@@ -1,9 +1,10 @@
-﻿namespace DotRegistry.Model.GitHub
+﻿namespace DotRegistry.Contract.GitHub
 {
     using System;
+
     using Newtonsoft.Json;
 
-    public partial class GitHubReleaseAuthorModel
+    public partial class GitHubOwner
     {
         [JsonProperty("login", Required = Required.Always)]
         public string Login { get; set; }

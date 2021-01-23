@@ -3,25 +3,32 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
-namespace DotRegistry.Contract
+namespace DotRegistry.Contract.Provider
 {
     /// <summary>
     /// Defines a set of properties outlining a Terraform provider
     /// </summary>
-    public abstract class Provider : EntityContract
+    public class ProviderEntity : EntityContract
     {
         /// <summary>
         /// 
         /// </summary>
-        protected Provider()
+        public ProviderEntity()
         {
 
         }
 
+        [JsonProperty(Required = Required.Always, PropertyName = "install_count")]
+
+        public long InstallCount { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "last_published")]
+        public DateTime LastPublished { get; set; }
+
         /// <summary>
         /// The namespace portion of the address of the requested provider. This is usually your company name or GitHub domain
         /// </summary>
-        [JsonProperty(Required = Required.Always, PropertyName = "ns")]
+        [JsonProperty(Required = Required.Always, PropertyName = "namespace")]
         public string Namespace { get; set; }
 
         /// <summary>
@@ -33,10 +40,16 @@ namespace DotRegistry.Contract
         /// <summary>
         /// The type portion of the address of the requested provider. This is the name of your provider
         /// </summary>
-        [JsonProperty(Required = Required.Always, PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(Required = Required.Always, PropertyName = "name")]
+        public string Name { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "id")]
+        public string ProviderId { get; set; }
 
         [JsonProperty(Required = Required.Always, PropertyName = "version")]
         public string ProviderVersion { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "published_by_slug")]
+        public string PublishedBySlug { get; set; }
     }
 }

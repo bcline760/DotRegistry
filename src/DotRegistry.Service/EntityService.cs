@@ -6,16 +6,18 @@ using log4net;
 
 using DotRegistry.Contract;
 using DotRegistry.Core.Logging;
-using DotRegistry.Interface;
+using DotRegistry.Interface.Repository;
+using DotRegistry.Interface.Service;
 
 namespace DotRegistry.Service
 {
     public abstract class EntityService<TE> : IEntityService<TE>
         where TE : EntityContract
     {
-        protected EntityService(IRepository<TE> repository)
+        protected EntityService(IRepository<TE> repository, ILog log)
         {
             Repository = repository;
+            Log = log;
         }
 
         public virtual async Task DeleteAsync(string slug)
@@ -38,6 +40,14 @@ namespace DotRegistry.Service
             await Repository.SaveAsync(entity);
         }
 
+        /// <summary>
+        /// Get a reference to the underlying repository
+        /// </summary>
         protected IRepository<TE> Repository { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected ILog Log { get; }
     }
 }

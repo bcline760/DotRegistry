@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+using log4net;
+
 using DotRegistry.Contract;
-using DotRegistry.Interface;
+using DotRegistry.Interface.Service;
+using DotRegistry.Core.Logging;
 
 namespace DotRegistry.Web.Controllers
 {
@@ -14,19 +17,20 @@ namespace DotRegistry.Web.Controllers
     [ApiController]
     public class ProviderController : ControllerBase
     {
-        public ProviderController(IProviderPackageService prService)
+        public ProviderController(IProviderService prService, ILog log)
         {
             ProviderService = prService;
+            Log = log;
         }
 
-        // GET: api/Provider
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var providers = await ProviderService.GetAllAsync();
+        //// GET: api/Provider
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var providers = await ProviderService.GetAllAsync();
 
-            return new OkObjectResult(providers);
-        }
+        //    return new OkObjectResult(providers);
+        //}
 
         // GET: api/Provider/5
         [HttpGet("{slug}", Name = "Get")]
@@ -47,16 +51,19 @@ namespace DotRegistry.Web.Controllers
         {
             try
             {
-                var packages = await ProviderService.GetPackagesAsync(ns, type);
+                var versions = await ProviderService.GetProviderVersionsAsync(ns, type);
 
-                if (packages.Count > 0)
+                if (versions != null)
                 {
-                    return new OkObjectResult(packages);
+                    return new OkObjectResult(versions);
                 }
+
+                return new NotFoundResult();
             }
             catch (Exception ex)
             {
-
+                ex.IfNotLoggedThenLog(Log);
+                return new StatusCodeResult(500);
             }
         }
 
@@ -65,32 +72,21 @@ namespace DotRegistry.Web.Controllers
         {
             try
             {
+                var package = await ProviderService.GetPackageAsync(ns, type, version, opSys, arch);
+                if (package == null)
+                    return new NotFoundResult();
 
+                return new OkObjectResult(package);
             }
             catch (Exception ex)
             {
-
+                ex.IfNotLoggedThenLog(Log);
+                return new StatusCodeResult(500);
             }
         }
 
-        // POST: api/Provider
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] IActionResult value)
-        {
-        }
+        protected IProviderService ProviderService { get; }
 
-        // PUT: api/Provider/5
-        [HttpPut("{slug}")]
-        public async Task<IActionResult> Put(string slug, [FromBody] IActionResult value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{slug}")]
-        public async Task<IActionResult> Delete(string slug)
-        {
-        }
-
-        protected IProviderPackageService ProviderService { get; }
+        protected ILog Log { get; }
     }
 }

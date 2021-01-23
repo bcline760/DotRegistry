@@ -8,9 +8,8 @@ using MongoDB.Driver;
 using AutoMapper;
 using log4net;
 
-using DotRegistry.Core.Logging;
 using DotRegistry.Contract;
-using DotRegistry.Interface;
+using DotRegistry.Interface.Repository;
 
 namespace DotRegistry.Model.Repository
 {

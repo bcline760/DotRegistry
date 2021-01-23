@@ -1,9 +1,10 @@
-﻿namespace DotRegistry.Model.GitHub
+﻿namespace DotRegistry.Contract.GitHub
 {
     using System;
+
     using Newtonsoft.Json;
 
-    public partial class GitHubReleaseAssetModel
+    public partial class GitHubAsset
     {
         [JsonProperty("url", Required = Required.Always)]
         public Uri Url { get; set; }
@@ -21,7 +22,7 @@
         public string Label { get; set; }
 
         [JsonProperty("uploader", Required = Required.Always)]
-        public GitHubReleaseAuthorModel Uploader { get; set; }
+        public GitHubAuthor Uploader { get; set; }
 
         [JsonProperty("content_type", Required = Required.Always)]
         public string ContentType { get; set; }

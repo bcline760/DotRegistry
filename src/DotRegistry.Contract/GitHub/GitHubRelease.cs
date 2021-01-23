@@ -1,13 +1,14 @@
-﻿namespace DotRegistry.Model.GitHub
+﻿namespace DotRegistry.Contract.GitHub
 {
     using System;
     using System.Collections.Generic;
 
     using System.Globalization;
+
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    public partial class GitHubReleaseModel
+    public partial class GitHubRelease
     {
         [JsonProperty("url", Required = Required.Always)]
         public Uri Url { get; set; }
@@ -25,7 +26,7 @@
         public long Id { get; set; }
 
         [JsonProperty("author", Required = Required.Always)]
-        public GitHubReleaseAuthorModel Author { get; set; }
+        public GitHubAuthor Author { get; set; }
 
         [JsonProperty("node_id", Required = Required.Always)]
         public string NodeId { get; set; }
@@ -52,7 +53,7 @@
         public DateTimeOffset PublishedAt { get; set; }
 
         [JsonProperty("assets", Required = Required.Always)]
-        public List<GitHubReleaseAssetModel> Assets { get; set; }
+        public List<GitHubAsset> Assets { get; set; }
 
         [JsonProperty("tarball_url", Required = Required.Always)]
         public Uri TarballUrl { get; set; }

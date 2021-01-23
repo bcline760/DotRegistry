@@ -1,9 +1,10 @@
-﻿namespace DotRegistry.Model.GitHub
+﻿namespace DotRegistry.Contract.GitHub
 {
     using System;
+
     using Newtonsoft.Json;
 
-    public partial class GitHubRepositoryModel
+    public partial class GitHubRepository
     {
         [JsonProperty("id", Required = Required.Always)]
         public long Id { get; set; }
@@ -21,13 +22,13 @@
         public bool Private { get; set; }
 
         [JsonProperty("owner", Required = Required.Always)]
-        public GitHubRepositoryOwnerModel Owner { get; set; }
+        public GitHubOwner Owner { get; set; }
 
         [JsonProperty("html_url", Required = Required.Always)]
         public Uri HtmlUrl { get; set; }
 
         [JsonProperty("description", Required = Required.AllowNull)]
-        public string Description { get; set; }
+        public object Description { get; set; }
 
         [JsonProperty("fork", Required = Required.Always)]
         public bool Fork { get; set; }
@@ -165,7 +166,7 @@
         public Uri SvnUrl { get; set; }
 
         [JsonProperty("homepage", Required = Required.AllowNull)]
-        public object Homepage { get; set; }
+        public string Homepage { get; set; }
 
         [JsonProperty("size", Required = Required.Always)]
         public long Size { get; set; }
@@ -176,7 +177,7 @@
         [JsonProperty("watchers_count", Required = Required.Always)]
         public long WatchersCount { get; set; }
 
-        [JsonProperty("language", Required = Required.AllowNull)]
+        [JsonProperty("language", Required = Required.Always)]
         public string Language { get; set; }
 
         [JsonProperty("has_issues", Required = Required.Always)]
@@ -198,7 +199,7 @@
         public long ForksCount { get; set; }
 
         [JsonProperty("mirror_url", Required = Required.AllowNull)]
-        public object MirrorUrl { get; set; }
+        public string MirrorUrl { get; set; }
 
         [JsonProperty("archived", Required = Required.Always)]
         public bool Archived { get; set; }
@@ -209,8 +210,8 @@
         [JsonProperty("open_issues_count", Required = Required.Always)]
         public long OpenIssuesCount { get; set; }
 
-        [JsonProperty("license", Required = Required.AllowNull)]
-        public GitHubRepositoryLicenseModel License { get; set; }
+        [JsonProperty("license", Required = Required.Always)]
+        public GitHubLicense License { get; set; }
 
         [JsonProperty("forks", Required = Required.Always)]
         public long Forks { get; set; }
@@ -225,6 +226,27 @@
         public string DefaultBranch { get; set; }
 
         [JsonProperty("permissions", Required = Required.Always)]
-        public GitHubRepositoryPermissionsModel Permissions { get; set; }
+        public GitHubPermissions Permissions { get; set; }
+
+        [JsonProperty("temp_clone_token", Required = Required.Always)]
+        public string TempCloneToken { get; set; }
+
+        [JsonProperty("allow_squash_merge", Required = Required.Always)]
+        public bool AllowSquashMerge { get; set; }
+
+        [JsonProperty("allow_merge_commit", Required = Required.Always)]
+        public bool AllowMergeCommit { get; set; }
+
+        [JsonProperty("allow_rebase_merge", Required = Required.Always)]
+        public bool AllowRebaseMerge { get; set; }
+
+        [JsonProperty("delete_branch_on_merge", Required = Required.Always)]
+        public bool DeleteBranchOnMerge { get; set; }
+
+        [JsonProperty("network_count", Required = Required.Always)]
+        public long NetworkCount { get; set; }
+
+        [JsonProperty("subscribers_count", Required = Required.Always)]
+        public long SubscribersCount { get; set; }
     }
 }

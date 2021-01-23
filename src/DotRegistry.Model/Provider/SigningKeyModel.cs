@@ -6,7 +6,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 using DotRegistry.Contract;
 
-namespace DotRegistry.Model
+namespace DotRegistry.Model.Provider
 {
     public class SigningKeyModel
     {
