@@ -19,8 +19,5 @@ namespace DotRegistry.Model
 
         [BsonElement("published_providers"), BsonRequired]
         public List<string> PublishedProviderSlugs { get; set; }
-
-        [BsonElement("signing_keys"), BsonRequired]
-        public List<UserGpgKeyModel> SigningKeys { get; set; }
     }
 }

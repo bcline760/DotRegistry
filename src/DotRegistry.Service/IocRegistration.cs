@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Autofac;
+using DotRegistry.Interface.Service;
 
 namespace DotRegistry.Service
 {
@@ -12,7 +13,7 @@ namespace DotRegistry.Service
 
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterType<>
+            builder.RegisterType<GitHubService>().As<IGitHubService>().InstancePerLifetimeScope();
             base.Load(builder);
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-using DotRegistry.Contract;
+using DotRegistry.Contract.Provider;
 
 namespace DotRegistry.Model.Provider
 {
@@ -14,10 +14,10 @@ namespace DotRegistry.Model.Provider
         {
         }
 
-        public SigningKeyModel(SigningKeys keys)
+        public SigningKeyModel(SigningKeyEntity keys)
         {
-            Keys = keys.GpgPublicKeys
-                .Select(k => new GpgSigningKeyModel(k.KeyId, k.AsciiArmor))
+            Keys = keys.Keys
+                .Select(k => new GpgSigningKeyModel(k.KeyId, k.ArmoredPublicKey))
                 .ToList();
         }
 

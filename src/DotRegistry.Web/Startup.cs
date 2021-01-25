@@ -1,19 +1,27 @@
+using System;
+using System.Security.Claims;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Autofac;
+using Newtonsoft.Json.Linq;
 
 using DotRegistry.Core;
 using DotRegistry.Interface;
 using DotRegistry.Service;
 
 using log4net;
-using log4net.Repository.Hierarchy;
 
 namespace DotRegistry.Web
 {
@@ -51,6 +59,43 @@ namespace DotRegistry.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = "GitHub";
+            }).AddCookie().AddOAuth("GitHub", gh =>
+            {
+                gh.ClientId = Environment.GetEnvironmentVariable(Constants.GitHubClientIdEnvName);
+                gh.ClientSecret = Environment.GetEnvironmentVariable(Constants.GitHubClientSecretEnvName);
+                gh.CallbackPath = new Microsoft.AspNetCore.Http.PathString("/github-oauth");
+                gh.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
+                gh.TokenEndpoint = "https://github.com/login/oauth/access_token";
+                gh.UserInformationEndpoint = "https://api.github.com/user";
+                gh.SaveTokens = true;
+
+                gh.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+                gh.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+                gh.ClaimActions.MapJsonKey("urn:github:login", "login");
+                gh.ClaimActions.MapJsonKey("urn:github:url", "html_url");
+                //gh.ClaimActions.MapJsonKey("", "id");
+                //gh.ClaimActions.MapJsonKey("", "id");
+
+                gh.Events = new OAuthEvents
+                {
+                    OnCreatingTicket = async context =>
+                      {
+                          var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
+                          request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                          request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+                          var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
+                          response.EnsureSuccessStatusCode();
+                          var json = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+                          context.RunClaimActions(json.RootElement);
+                      }
+                };
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -82,7 +127,8 @@ namespace DotRegistry.Web
             }
 
             app.UseRouting();
-
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -96,6 +142,7 @@ namespace DotRegistry.Web
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
                 spa.Options.SourcePath = "ClientApp";
+                
 
                 if (env.IsDevelopment())
                 {

@@ -22,7 +22,7 @@ namespace DotRegistry.Model.GitHub
             string gitHubApiUrl = Environment.GetEnvironmentVariable(Constants.GitHubApiUrlEnvName);
 
             // If the GitHub API URL isn't defined, default to the public one.
-            GitHubApiUrl = string.IsNullOrEmpty(gitHubApiUrl) ? Constants.GitHubApiUrl : gitHubApiUrl;
+            GitHubApiUrl = string.IsNullOrEmpty(gitHubApiUrl) ? Constants.GitHubApiDefaultUrl : gitHubApiUrl;
 
             Log = log;
         }

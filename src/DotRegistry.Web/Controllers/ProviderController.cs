@@ -23,14 +23,14 @@ namespace DotRegistry.Web.Controllers
             Log = log;
         }
 
-        //// GET: api/Provider
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
-        //{
-        //    var providers = await ProviderService.GetAllAsync();
+        // GET: api/Provider
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var providers = await ProviderService.GetAllAsync();
 
-        //    return new OkObjectResult(providers);
-        //}
+            return new OkObjectResult(providers);
+        }
 
         // GET: api/Provider/5
         [HttpGet("{slug}", Name = "Get")]
@@ -46,12 +46,12 @@ namespace DotRegistry.Web.Controllers
             return new OkObjectResult(provider);
         }
 
-        [HttpGet("{ns}/{type}/versions", Name = "GetVersionsAsync")]
-        public async Task<IActionResult> Get(string ns, string type)
+        [HttpGet("{ns}/{name}/versions", Name = "GetVersionsAsync")]
+        public async Task<IActionResult> Get(string ns, string name)
         {
             try
             {
-                var versions = await ProviderService.GetProviderVersionsAsync(ns, type);
+                var versions = await ProviderService.GetProviderVersionsAsync(ns, name);
 
                 if (versions != null)
                 {
@@ -67,12 +67,12 @@ namespace DotRegistry.Web.Controllers
             }
         }
 
-        [HttpGet("{ns}/{type}/{version}/download/{opSys}/{arch}", Name = "GetPackageAsync")]
-        public async Task<IActionResult> Get(string ns, string type, string version, string opSys, string arch)
+        [HttpGet("{ns}/{name}/{version}/download/{opSys}/{arch}", Name = "GetPackageAsync")]
+        public async Task<IActionResult> Get(string ns, string name, string version, string opSys, string arch)
         {
             try
             {
-                var package = await ProviderService.GetPackageAsync(ns, type, version, opSys, arch);
+                var package = await ProviderService.GetPackageAsync(ns, name, version, opSys, arch);
                 if (package == null)
                     return new NotFoundResult();
 

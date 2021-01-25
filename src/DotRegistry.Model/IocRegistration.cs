@@ -4,10 +4,13 @@ using Autofac;
 using AutoMapper;
 using MongoDB.Driver;
 
-using DotRegistry.Contract;
+using DotRegistry.Contract.Provider;
 using DotRegistry.Core;
-using DotRegistry.Interface;
+using DotRegistry.Interface.Repository;
+using DotRegistry.Model.Provider;
 using DotRegistry.Model.Repository;
+using DotRegistry.Model.GitHub;
+using DotRegistry.Contract;
 
 namespace DotRegistry.Model
 {
@@ -23,7 +26,8 @@ namespace DotRegistry.Model
             {
                 var mapConfig = new MapperConfiguration(cfg =>
                   {
-                      cfg.CreateMap<ProviderPackage, ProviderPackageModel>().ReverseMap();
+                      cfg.CreateMap<ProviderEntity, ProviderModel>().ReverseMap();
+                      cfg.CreateMap<UserProfile, UserProfileModel>().ReverseMap();
                   });
 
                 var map = mapConfig.CreateMapper();
@@ -43,8 +47,12 @@ namespace DotRegistry.Model
                 return db;
             }).As<IMongoDatabase>().SingleInstance();
 
-            builder.RegisterType<ProviderPackageRepository>()
-                .As<IProviderPackageRepository>()
+            builder.RegisterType<GitHubApiRepository>()
+                .As<IGitHubApiRepository>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<ProviderRepository>()
+                .As<IProviderRepository>()
                 .InstancePerLifetimeScope();
 
             base.Load(builder);

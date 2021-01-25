@@ -51,6 +51,10 @@ namespace DotRegistry.Interface.Service
         /// <returns>List of all providers published by given user</returns>
         Task<List<ProviderEntity>> GetProvidersByPublishingUser(string publishedBySlug);
 
+        /// <summary>
+        /// Publish a provider from a GitHub repository to the registry
+        /// </summary>
+        /// <param name="repositoryName">Name of the repository to publish.</param>
         Task PublishProvider(string repositoryName);
     }
 }

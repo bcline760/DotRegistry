@@ -3,7 +3,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-using DotRegistry.Contract;
+using DotRegistry.Contract.Provider;
 
 namespace DotRegistry.Model.Provider
 {
@@ -14,10 +14,10 @@ namespace DotRegistry.Model.Provider
 
         }
 
-        public GpgSigningKeyModel(GpgPublicKey key)
+        public GpgSigningKeyModel(GpgSigningKeyEntity key)
         {
             KeyId = key.KeyId;
-            ArmoredPublicKey = key.AsciiArmor;
+            ArmoredPublicKey = key.ArmoredPublicKey;
         }
 
         public GpgSigningKeyModel(string keyId, string armor)
