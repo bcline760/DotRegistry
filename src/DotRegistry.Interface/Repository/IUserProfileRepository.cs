@@ -8,13 +8,13 @@ namespace DotRegistry.Interface.Repository
     /// <summary>
     /// 
     /// </summary>
-    public interface IUserProfileRepository : IRepository<UserProfile>
+    public interface IUserProfileRepository : IRepository<UserProfileEntity>
     {
         /// <summary>
         /// Get a profile by their login
         /// </summary>
         /// <param name="login">Their GitHub login</param>
         /// <returns>A profile matching their login or null if none found</returns>
-        Task<UserProfile> GetByLogin(string login);
+        Task<UserProfileEntity> GetByLogin(string login);
     }
 }

@@ -6,6 +6,9 @@ using DotRegistry.Contract.Provider;
 
 namespace DotRegistry.Interface.Repository
 {
+    /// <summary>
+    /// Defines a repository for items related to providers
+    /// </summary>
     public interface IProviderRepository : IRepository<ProviderEntity>
     {
         /// <summary>

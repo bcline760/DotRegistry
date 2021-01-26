@@ -42,7 +42,7 @@ namespace DotRegistry.Interface.Service
         /// <param name="nSpace">Provider namespace such as company name or GitHub URL</param>
         /// <param name="name">The name of the provider</param>
         /// <returns>An object containing a list of published versions and their supported platforms</returns>
-        Task<ProviderVersionEntity> GetProviderVersionsAsync(string nSpace, string name);
+        Task<ProviderVersionsEntity> GetProviderVersionsAsync(string nSpace, string name);
 
         /// <summary>
         /// Get all providers published by a given user

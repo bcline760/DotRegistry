@@ -27,7 +27,7 @@ namespace DotRegistry.Model
                 var mapConfig = new MapperConfiguration(cfg =>
                   {
                       cfg.CreateMap<ProviderEntity, ProviderModel>().ReverseMap();
-                      cfg.CreateMap<UserProfile, UserProfileModel>().ReverseMap();
+                      cfg.CreateMap<UserProfileEntity, UserProfileModel>().ReverseMap();
                   });
 
                 var map = mapConfig.CreateMapper();

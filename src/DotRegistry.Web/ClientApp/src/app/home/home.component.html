@@ -1,13 +1,38 @@
-<p>Welcome to your new single-page application, built with:</p>
-<ul>
-  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-</ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
+<div class="home-component">
+  <div class="text-box">
+    <h1 class="text-center">Welcome!</h1>
+    <p>
+      In here, you will find custom made Terraform providers and modules to suit your Infrastructure as Code needs.
+    </p>
+  </div>
+  <div class="search-box">
+    <input type="text" class="form-control" placeholder="Search for providers or modules within the registry" id="registryTypeAhead"
+           aria-label="Search for providers or modules within the registry" aria-describedby="basic-addon2">
+  </div>
+  <div class="explain-box">
+    <div class="row no-gutters">
+      <div class="col description-block">
+        <h3 class="border-bottom border-primary">Providers</h3>
+        <p class="lead">What are Terraform providers?</p>
+        <p>
+          Terraform providers are essentially plugins that implement data and resource types.
+          Typical examples of providers are <strong>AzureRM</strong> and <strong>AWS</strong> that are found on Hashicorp's public
+          repository.
+        </p>
+        <div class="text-center">
+          <div class="browse border border-primary mx-auto box-shadow"><a routerLink="['/browse/providers']">Browse Providers</a></div>
+        </div>
+      </div>
+      <div class="col description-block">
+        <h3 class="border-bottom border-primary">Modules</h3>
+        <p class="lead">What are Terraform modules?</p>
+        <p>
+          Terraform modules are reusable snippets of Terraform configuration. They are groups of resources combined into one and are managed as if a single resource.
+        </p>
+        <div class="text-center">
+          <div class="browse border border-primary mx-auto box-shadow"><a routerLink="['/browse/modules']">Browse Modules</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@ namespace DotRegistry.Interface.Service
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        Task<UserProfile> GetAuthenticatedUser(string username);
+        Task<UserProfileEntity> GetAuthenticatedUser(string username);
 
         /// <summary>
         /// 

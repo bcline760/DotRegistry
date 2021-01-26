@@ -7,12 +7,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+
 import { LoginModule } from './login/login.module';
+import { HomeModule } from './home/home.module';
 import { HttpService } from '../service/http.service';
 import { TokenService } from '../service/token.service';
-import { HomeModule } from './home/home.module';
 
 const appRoutes: Routes = [
   {

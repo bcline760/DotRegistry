@@ -43,13 +43,28 @@ namespace DotRegistry.Contract.Provider
         [JsonProperty(Required = Required.Always, PropertyName = "name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [JsonProperty(Required = Required.Always, PropertyName = "id")]
         public string ProviderId { get; set; }
 
+        /// <summary>
+        /// The latest version of the provider
+        /// </summary>
         [JsonProperty(Required = Required.Always, PropertyName = "version")]
         public string ProviderVersion { get; set; }
 
+        /// <summary>
+        /// Get or set the person or organization that last published this provider
+        /// </summary>
         [JsonProperty(Required = Required.Always, PropertyName = "published_by_slug")]
         public string PublishedBySlug { get; set; }
+
+        /// <summary>
+        /// List of all packages available for this provider
+        /// </summary>
+        [JsonIgnore]
+        public List<ProviderPackageEntity> Packages { get; set; }
     }
 }

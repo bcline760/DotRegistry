@@ -1,7 +1,7 @@
 <header>
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">DotRegistry</a>
+      <span class="navbar-brand mb-0 h1" [routerLink]="['/']">Dot Registry</span>
       <button class="navbar-toggler"
               type="button"
               data-toggle="collapse"
@@ -11,20 +11,31 @@
               (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-        [ngClass]="{ show: isExpanded }"
-      >
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
+          <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" [routerLink]="['#']" id="browseDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Browse
+            </a>
+            <div class="dropdown-menu" aria-labelledby="browseDropdownMenuLink">
+              <a class="dropdown-item" [routerLink]="['/browse/providers']">Providers</a>
+              <a class="dropdown-item" [routerLink]="['/browse/modules']">Modules</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" [routerLink]="['#']" id="publishDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Publish
+            </a>
+            <div class="dropdown-menu" aria-labelledby="publishDropdownMenuLink">
+              <a class="dropdown-item" [routerLink]="['/publish/providers']">Providers</a>
+              <a class="dropdown-item" [routerLink]="['/publish/modules']">Modules</a>
+            </div>
+          </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/login/signin']">Sign In with GitHub</a>
+            <a class="nav-link text-dark" [routerLink]="['/login/signin']">Sign In</a>
           </li>
         </ul>
       </div>

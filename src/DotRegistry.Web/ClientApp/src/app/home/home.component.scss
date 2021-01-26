@@ -1,0 +1,35 @@
+@import "../../theme/custom.scss";
+
+.browse {
+  font-size: smaller;
+  line-height: 4em;
+  text-align: center;
+  width: 12em;
+}
+
+.home-component {
+  overflow: auto;
+}
+
+.text-box {
+  width: 40em;
+  margin: 2em auto;
+}
+
+.search-box {
+  width: 40em;
+  margin: 3em auto;
+}
+
+.choose-box {
+  margin: 2em auto;
+  width: 30em;
+}
+
+.description-block {
+  height: 15em;
+}
+
+.explain-box {
+  margin-top: 10em;
+}

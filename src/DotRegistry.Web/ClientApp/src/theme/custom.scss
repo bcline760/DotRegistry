@@ -1,0 +1,28 @@
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+
+$shade-light: #5C9CC4;
+$shade-lighter: #6187CF;
+$primary-color: #5F67B8;
+$shade-darker: #8C5CC4;
+$complementary-light: #B89769;
+$complementary-dark: #6B5A42;
+
+$danger-color: #B87272;
+$success-color: #72B84D;
+$warning-color: #B8B656;
+$info-color: #A0A3C3;
+$dark-color: #2D326B;
+$light-color: #9EA6FF;
+
+$theme-colors: (
+    "primary": $primary-color,
+    "secondary": $shade-light,
+    "info": $info-color,
+    "warning": $warning-color,
+    "danger": $danger-color,
+    "success": $success-color,
+    "light": $light-color,
+    "dark": $dark-color
+);

@@ -16,13 +16,14 @@ namespace DotRegistry.Service
     {
         public GitHubService(IGitHubApiRepository githubApi, IUserProfileRepository userRepository)
         {
-            GitHubRepository = githubApi;
+            
+            GitHubRepo = githubApi;
             UserRepository = userRepository;
         }
 
         public string AccessToken { get; set; }
 
-        public async Task<UserProfile> GetAuthenticatedUser(string username)
+        public async Task<UserProfileEntity> GetAuthenticatedUser(string username)
         {
             if (string.IsNullOrEmpty(AccessToken))
                 throw new InvalidOperationException("Missing access token");
@@ -36,7 +37,7 @@ namespace DotRegistry.Service
             if (profile == null)
             {
                 var gitHubKeys = await gitHubClient.User.GpgKey.GetAllForCurrent();
-                var newProfile = new UserProfile
+                var newProfile = new UserProfileEntity
                 {
                     Active = true,
                     CreatedAt = DateTime.UtcNow,
@@ -89,40 +90,15 @@ namespace DotRegistry.Service
 
         public async Task<List<GitHubRepository>> GetRepositories(string username)
         {
-            var gitHubClient = new GitHubClient(new ProductHeaderValue(username), new InMemoryCredentialStore(new Credentials(AccessToken)));
-            var gitHubRepos = await gitHubClient.Repository.GetAllForCurrent();
+            var repositories = await GitHubRepo.GetRepositories(username, username, AccessToken);
+            repositories = repositories
+                .Where(r => !r.Private && r.FullName.StartsWith("terraform-provider-"))
+                .ToList();
 
-            var rawTerraformRepos = gitHubRepos.Where(r => !r.Archived && !r.Private && r.Name.StartsWith("terraform-provider-"));
-
-            var terraformRepositories = rawTerraformRepos.Select(r => new GitHubRepository
-            {
-                AllowMergeCommit = r.AllowMergeCommit.HasValue ? r.AllowMergeCommit.Value : false,
-                AllowRebaseMerge = r.AllowRebaseMerge.HasValue ? r.AllowRebaseMerge.Value : false,
-                AllowSquashMerge = r.AllowSquashMerge.HasValue ? r.AllowSquashMerge.Value : false,
-                Archived = false,
-                ArchiveUrl = null,
-                CloneUrl = new Uri(r.CloneUrl),
-                CreatedAt = r.CreatedAt.UtcDateTime,
-                FullName = r.FullName,
-                Fork = r.Fork,
-                OpenIssuesCount = r.OpenIssuesCount,
-                Owner = new GitHubOwner
-                {
-                    AvatarUrl = new Uri(r.Owner.AvatarUrl),
-                    Id = r.Owner.Id,
-                    Login = r.Owner.Login,
-                    Type = r.Owner.Type.HasValue ? r.Owner.Type.Value.ToString() : AccountType.User.ToString()
-                },
-                Private = false,
-                Size = r.Size,
-                SvnUrl = new Uri(r.SvnUrl),
-                Url = new Uri(r.Url)
-            }).ToList();
-
-            return terraformRepositories;
+            return repositories;
         }
 
-        protected IGitHubApiRepository GitHubRepository { get; private set; }
+        protected IGitHubApiRepository GitHubRepo { get; private set; }
 
         protected IUserProfileRepository UserRepository { get; private set; }
     }

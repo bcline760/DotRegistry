@@ -7,9 +7,9 @@ using DotRegistry.Contract.GitHub;
 
 namespace DotRegistry.Contract
 {
-    public class UserProfile : EntityContract
+    public class UserProfileEntity : EntityContract
     {
-        public UserProfile()
+        public UserProfileEntity()
         {
 
         }

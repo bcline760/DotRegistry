@@ -6,24 +6,11 @@ import { TokenService } from '../../../service/token.service';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.css']
+  styleUrls: ['./signin.component.scss']
 })
-export class SigninComponent implements OnInit, OnDestroy {
+export class SigninComponent {
 
   public hasError: boolean;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    protected httpService: HttpService,
-    protected tokenService: TokenService
-  ) {
-    this.hasError = false;
-  }
-
-  ngOnDestroy(): void {
-  }
-
-  async ngOnInit() {
-  }
+  constructor() {}
 }
