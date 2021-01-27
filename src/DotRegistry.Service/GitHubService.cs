@@ -7,6 +7,10 @@ using DotRegistry.Contract;
 using DotRegistry.Contract.GitHub;
 using DotRegistry.Interface.Repository;
 using DotRegistry.Interface.Service;
+
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+
 using Octokit;
 using Octokit.Internal;
 
@@ -14,21 +18,17 @@ namespace DotRegistry.Service
 {
     public class GitHubService : IGitHubService
     {
-        public GitHubService(IGitHubApiRepository githubApi, IUserProfileRepository userRepository)
+        public GitHubService(IGitHubApiRepository githubApi, IUserProfileRepository userRepository, IHttpContextAccessor accessor)
         {
-            
+            Accessor = accessor;
             GitHubRepo = githubApi;
             UserRepository = userRepository;
         }
 
-        public string AccessToken { get; set; }
-
         public async Task<UserProfileEntity> GetAuthenticatedUser(string username)
         {
-            if (string.IsNullOrEmpty(AccessToken))
-                throw new InvalidOperationException("Missing access token");
-
-            var gitHubClient = new GitHubClient(new ProductHeaderValue(username), new InMemoryCredentialStore(new Credentials(AccessToken)));
+            string token = await Accessor.HttpContext.GetTokenAsync("access_token");
+            var gitHubClient = new GitHubClient(new ProductHeaderValue(username), new InMemoryCredentialStore(new Credentials(token)));
             var gitHubUser = await gitHubClient.User.Current();
 
             var profile = await UserRepository.GetByLogin(username);
@@ -82,6 +82,8 @@ namespace DotRegistry.Service
                         KeyId = s.KeyId,
                         Namespace = username
                     }).ToList();
+
+                    await UserRepository.SaveAsync(profile);
                 }
             }
 
@@ -90,7 +92,8 @@ namespace DotRegistry.Service
 
         public async Task<List<GitHubRepository>> GetRepositories(string username)
         {
-            var repositories = await GitHubRepo.GetRepositories(username, username, AccessToken);
+            string token = await Accessor.HttpContext.GetTokenAsync("access_token");
+            var repositories = await GitHubRepo.GetRepositories(username, username, token);
             repositories = repositories
                 .Where(r => !r.Private && r.FullName.StartsWith("terraform-provider-"))
                 .ToList();
@@ -99,6 +102,8 @@ namespace DotRegistry.Service
         }
 
         protected IGitHubApiRepository GitHubRepo { get; private set; }
+
+        protected IHttpContextAccessor Accessor { get; private set; }
 
         protected IUserProfileRepository UserRepository { get; private set; }
     }

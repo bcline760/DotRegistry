@@ -14,28 +14,39 @@
       <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-dark" [routerLink]="['/']"><i class="fas fa-home"></i>&nbsp;Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" [routerLink]="['#']" id="browseDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Browse
+              <i class="fas fa-search"></i>&nbsp;Browse
             </a>
             <div class="dropdown-menu" aria-labelledby="browseDropdownMenuLink">
-              <a class="dropdown-item" [routerLink]="['/browse/providers']">Providers</a>
-              <a class="dropdown-item" [routerLink]="['/browse/modules']">Modules</a>
+              <a class="dropdown-item" [routerLink]="['/browse/providers']"><i class="fas fa-globe"></i>&nbsp;Providers</a>
+              <a class="dropdown-item" [routerLink]="['/browse/modules']"><i class="fas fa-layer-group"></i>&nbsp;Modules</a>
             </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" [routerLink]="['#']" id="publishDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Publish
+              <i class="fas fa-upload"></i>&nbsp;Publish
             </a>
             <div class="dropdown-menu" aria-labelledby="publishDropdownMenuLink">
-              <a class="dropdown-item" [routerLink]="['/publish/providers']">Providers</a>
-              <a class="dropdown-item" [routerLink]="['/publish/modules']">Modules</a>
+              <a class="dropdown-item" [routerLink]="['/publish/providers']"><i class="fas fa-globe"></i>&nbsp;Providers</a>
+              <a class="dropdown-item" [routerLink]="['/publish/modules']"><i class="fas fa-layer-group"></i>&nbsp;Modules</a>
             </div>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/login/signin']">Sign In</a>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="!isAuthenticated">
+            <a class="nav-link text-dark" [routerLink]="['/login/signin']"><i class="fab fa-github"></i>&nbsp;Sign In</a>
+          </li>
+          <li class="nav-item dropdown" [routerLinkActive]="['link-active']" *ngIf="isAuthenticated">
+            <a class="nav-link dropdown-toggle" [routerLink]="['#']" id="profileDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="{{profile.avatarUrl}}" />&nbsp;Profile
+            </a>
+            <div class="dropdown-menu" aria-labelledby="profileDropdownMenuLink">
+              <a class="dropdown-item" [routerLink]="['/profile']"><i class="fas fa-user"></i>&nbsp;Profile</a>
+              <a class="dropdown-item" [routerLink]="['/profile/settings']"><i class="fas fa-cog"></i>&nbsp;Settings</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" [routerLink]="['/login/signout']"><i class="fas fa-sign-out-alt"></i>&nbsp;Sign Out</a>
+            </div>
           </li>
         </ul>
       </div>

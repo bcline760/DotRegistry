@@ -22,6 +22,8 @@ using DotRegistry.Interface;
 using DotRegistry.Service;
 
 using log4net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DotRegistry.Web
 {
@@ -54,6 +56,7 @@ namespace DotRegistry.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -69,18 +72,20 @@ namespace DotRegistry.Web
             {
                 gh.ClientId = Environment.GetEnvironmentVariable(Constants.GitHubClientIdEnvName);
                 gh.ClientSecret = Environment.GetEnvironmentVariable(Constants.GitHubClientSecretEnvName);
-                gh.CallbackPath = new Microsoft.AspNetCore.Http.PathString("/github-oauth");
+                gh.CallbackPath = new PathString("/github-oauth");
                 gh.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
                 gh.TokenEndpoint = "https://github.com/login/oauth/access_token";
                 gh.UserInformationEndpoint = "https://api.github.com/user";
+                gh.Scope.Add("read:user");
+                gh.Scope.Add("user:email");
+                gh.Scope.Add("read:gpg_key");
+                gh.Scope.Add("read:public_key");
                 gh.SaveTokens = true;
 
                 gh.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
                 gh.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
                 gh.ClaimActions.MapJsonKey("urn:github:login", "login");
                 gh.ClaimActions.MapJsonKey("urn:github:url", "html_url");
-                //gh.ClaimActions.MapJsonKey("", "id");
-                //gh.ClaimActions.MapJsonKey("", "id");
 
                 gh.Events = new OAuthEvents
                 {
@@ -96,12 +101,22 @@ namespace DotRegistry.Web
                       }
                 };
             });
+            services.AddAuthorization(a =>
+            {
+                a.AddPolicy("ValidGitHubToken", p =>
+                {
+                    p.AuthenticationSchemes.Add(CookieAuthenticationDefaults.AuthenticationScheme);
+                    p.RequireAuthenticatedUser();
+                });
+            });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.Register(r => LogManager.GetLogger(typeof(Startup))).As<ILog>().SingleInstance();
-
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             ModuleRegistration.Register(builder);
         }
 

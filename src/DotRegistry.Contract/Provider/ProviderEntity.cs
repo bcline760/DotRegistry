@@ -18,11 +18,11 @@ namespace DotRegistry.Contract.Provider
 
         }
 
-        [JsonProperty(Required = Required.Always, PropertyName = "install_count")]
+        [JsonProperty(Required = Required.Always, PropertyName = "installCount")]
 
         public long InstallCount { get; set; }
 
-        [JsonProperty(Required = Required.Always, PropertyName = "last_published")]
+        [JsonProperty(Required = Required.Always, PropertyName = "lastPublished")]
         public DateTime LastPublished { get; set; }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace DotRegistry.Contract.Provider
         /// <summary>
         /// Get or set the person or organization that last published this provider
         /// </summary>
-        [JsonProperty(Required = Required.Always, PropertyName = "published_by_slug")]
+        [JsonProperty(Required = Required.Always, PropertyName = "publishedBySlug")]
         public string PublishedBySlug { get; set; }
 
         /// <summary>

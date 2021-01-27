@@ -1,5 +1,4 @@
-﻿using System;
-namespace DotRegistry.Core
+﻿namespace DotRegistry.Core
 {
     /// <summary>
     /// Defines a series of constants used throughout the application
@@ -7,9 +6,11 @@ namespace DotRegistry.Core
     public static class Constants
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static readonly string ConnectionStringEnvName = "DB_CONNECT_STR";
+
+        public static readonly string DatabaseNameEnvName = "DB_NAME";
 
         /// <summary>
         /// Environment variable for the GitHub client ID

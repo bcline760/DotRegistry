@@ -40,7 +40,6 @@ namespace DotRegistry.Model.Repository
 
         public virtual async Task<IEnumerable<TE>> GetAllAsync()
         {
-
             List<TE> entities = new List<TE>();
             var filter = Builders<TM>.Filter.Empty;
             using (var collection = await Collection.FindAsync(filter))

@@ -28,8 +28,8 @@ namespace DotRegistry.Model
         [BsonElement("active"), BsonRequired]
         public bool Active { get; set; }
 
-        [BsonElement("created_at"), BsonRequired, BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
-        public BsonDateTime CreatedAt { get; set; }
+        [BsonElement("created_at"), BsonRequired]
+        public DateTime CreatedAt { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonIgnoreIfDefault, BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
@@ -38,8 +38,8 @@ namespace DotRegistry.Model
         public string Slug { get; set; }
 
 #nullable enable
-        [BsonElement("updated_at"), BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
-        public BsonDateTime? UpdatedAt { get; set; }
+        [BsonElement("updated_at")]
+        public DateTime? UpdatedAt { get; set; }
 #nullable restore
     }
 }

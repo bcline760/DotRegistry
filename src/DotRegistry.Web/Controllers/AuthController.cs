@@ -1,30 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
 
 using log4net;
-
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 
 using DotRegistry.Core.Logging;
 
 namespace DotRegistry.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class SessionController : ControllerBase
+    public class AuthController : Controller
     {
-        public SessionController(ILog log)
+        public AuthController(ILog log)
         {
-            Log = log;
+
         }
 
-        [HttpGet, Route("login")]
-        public IActionResult Login(string returnUrl="/")
+        public IActionResult Index(string returnUrl="/")
         {
             try
             {

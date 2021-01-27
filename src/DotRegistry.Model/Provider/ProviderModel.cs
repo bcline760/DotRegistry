@@ -12,8 +12,8 @@ namespace DotRegistry.Model.Provider
         [BsonElement("install_count"), BsonRequired]
         public long InstallCount { get; set; }
 
-        [BsonElement("published"), BsonRequired, BsonDateTimeOptions(DateOnly = true)]
-        public BsonDateTime LastPublished { get; set; }
+        [BsonElement("published"), BsonRequired]
+        public DateTime LastPublished { get; set; }
 
         [BsonElement("name"), BsonRequired]
         public string Name { get; set; }
