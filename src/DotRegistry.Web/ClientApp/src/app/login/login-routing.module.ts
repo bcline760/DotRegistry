@@ -13,11 +13,6 @@ const routes: Routes = [
         path: 'signin',
         component: SigninComponent,
         pathMatch: 'full'
-      },
-      {
-        path: 'callback',
-        component: SigninComponent,
-        pathMatch: 'full'
       }
     ]
   }

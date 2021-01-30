@@ -37,6 +37,13 @@ namespace DotRegistry.Interface.Service
         Task<ProviderEntity> GetProviderAsync(string nSpace, string name);
 
         /// <summary>
+        /// Get providers by selected categories
+        /// </summary>
+        /// <param name="categories">An array of categories</param>
+        /// <returns>Providers matching the assigned categories</returns>
+        Task<List<ProviderEntity>> GetProvidersByCategoryAsync(string[] categories);
+
+        /// <summary>
         /// Get all published versions of a Terraform provider
         /// </summary>
         /// <param name="nSpace">Provider namespace such as company name or GitHub URL</param>

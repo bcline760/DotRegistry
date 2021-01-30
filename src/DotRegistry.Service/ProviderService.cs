@@ -38,6 +38,17 @@ namespace DotRegistry.Service
             return await ((IProviderRepository)this.Repository).GetProviderAsync(nSpace, name);
         }
 
+        public async Task<List<ProviderEntity>> GetProvidersByCategoryAsync(string[] categories)
+        {
+            var iface = ((IProviderRepository)this.Repository);
+
+            var providers = await GetAllAsync();
+
+            providers = providers.Where(c => c.Categories.Any(x => categories.Contains(x)));
+
+            return providers.ToList();
+        }
+
         public async Task<List<ProviderEntity>> GetProvidersByPublishingUser(string publishedBySlug)
         {
             var iface = this.Repository as IProviderRepository;

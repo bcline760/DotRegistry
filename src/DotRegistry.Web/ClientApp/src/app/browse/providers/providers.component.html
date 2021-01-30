@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <app-provider-categories (categoriesChanged)="onCategoryChange($event)"></app-provider-categories>
+    </div>
+    <div class="col">
+      <app-provider-list [selectedCategories]="selectedCategories$"></app-provider-list>
+    </div>
+  </div>
+</div>

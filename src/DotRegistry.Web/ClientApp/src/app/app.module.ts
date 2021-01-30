@@ -20,26 +20,11 @@ import { ModuleService } from '../service/module.service';
 import { HttpService } from '../service/http.service';
 
 const appRoutes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./home/home.module').then(h => HomeModule)
-  },
-  {
-    path: 'browse',
-    loadChildren: () => import('./browse/browse.module').then(b => BrowseModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then(l => LoginModule)
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then(pr => ProfileModule)
-  },
-  {
-    path: 'publish',
-    loadChildren: () => import('./publish/publish.module').then(pu => PublishModule)
-  }
+  { path: '', loadChildren: () => import('./home/home.module').then(h => h.HomeModule) },
+  { path: 'browse', loadChildren: () => import('./browse/browse.module').then(b => b.BrowseModule) },
+  { path: 'login', loadChildren: () => import('./login/login.module').then(l => l.LoginModule) },
+  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(pr => pr.ProfileModule) },
+  { path: 'publish', loadChildren: () => import('./publish/publish.module').then(pu => pu.PublishModule) }
 ];
 
 @NgModule({
@@ -53,10 +38,10 @@ const appRoutes: Routes = [
     FormsModule,
     HomeModule,
     LoginModule,
-    RouterModule.forRoot(appRoutes),
     BrowseModule,
     PublishModule,
-    ProfileModule
+    ProfileModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [HttpService, ProfileService, ProviderService, AuthGuardService, ModuleService],
   bootstrap: [AppComponent]

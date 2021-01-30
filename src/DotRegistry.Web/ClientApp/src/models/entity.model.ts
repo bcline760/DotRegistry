@@ -1,28 +1,19 @@
-export abstract class Entity {
-  constructor() {
-    this.active = false;
-    this.createdAt = new Date();
-    this.slug = '';
-    this.updatedAt = null;
-  }
-
+export interface Entity {
   /**
-   * Flag to determine if the current entity was "soft" deleted
-   */
-  public active: boolean;
-
+  * Flag to determine if the current entity was "soft" deleted
+  */
+  active: boolean;
   /**
   * When this entity was created
   */
-  public createdAt: Date;
-
+  createdAt: Date;
   /**
   * The unique slug identifying this entity
   */
-  public slug: string;
+  slug: string;
 
   /**
   * When this entity was last updated
   */
-  public updatedAt: Date | null;
+  updatedAt?: Date;
 }

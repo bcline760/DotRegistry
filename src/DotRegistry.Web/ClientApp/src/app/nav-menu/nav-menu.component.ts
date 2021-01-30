@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../service/profile.service';
 import { GithubProfile } from '../../models/github-profile.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav-menu',
@@ -13,18 +14,17 @@ export class NavMenuComponent implements OnInit {
   profile: GithubProfile | null;
 
   constructor(protected profileSvc: ProfileService) {
+    this.profile = null;
   }
 
-  async ngOnInit(): Promise<void> {
-    try {
-      const profile: GithubProfile = await this.profileSvc.getProfileAsync();
-      if (profile != null) {
-        this.profile = profile;
-        this.isAuthenticated = true;
-      }
-    } catch (e) {
-      this.isAuthenticated = false;
-    }
+  ngOnInit() {
+    this.profileSvc.getProfileAsync()
+      .pipe(take(1)).subscribe(s => {
+        this.profile = s;
+      }, error => {
+        console.log(error);
+        this.profile = null;
+      });
   }
 
   collapse() {

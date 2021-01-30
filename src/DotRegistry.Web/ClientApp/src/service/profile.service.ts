@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { GithubProfile } from '../models/github-profile.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +9,10 @@ import { GithubProfile } from '../models/github-profile.model';
 export class ProfileService {
   constructor(protected httpService: HttpService) { }
 
-  async getProfileAsync(): Promise<GithubProfile> | null {
+  getProfileAsync(): Observable<GithubProfile> {
     const url: string = `${window.location.origin}/api/github/user`;
+    const profile: Observable<GithubProfile> = this.httpService.getAsync(url);
 
-    try {
-      const profile: GithubProfile = await this.httpService.getAsync(url);
-
-      return profile;
-    } catch (e) {
-      return null;
-    }
+    return profile;
   }
 }

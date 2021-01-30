@@ -85,6 +85,31 @@ namespace DotRegistry.Web.Controllers
             }
         }
 
+        [HttpGet("", Name = "GetByCategoriesAsync")]
+        public async Task<IActionResult> GetByCategoriesAsync(string pr)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(pr))
+                {
+                    string[] categories = pr.Split(',');
+                    var providers = await ProviderService.GetProvidersByCategoryAsync(categories);
+                    return Ok(providers);
+                }
+                else
+                {
+                    var providers = await ProviderService.GetAllAsync();
+
+                    return Ok(providers);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.IfNotLoggedThenLog(Log);
+                return new StatusCodeResult(500);
+            }
+        }
+
         protected IProviderService ProviderService { get; }
 
         protected ILog Log { get; }

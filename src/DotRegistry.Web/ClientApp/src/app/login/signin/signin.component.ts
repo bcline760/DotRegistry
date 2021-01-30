@@ -9,5 +9,7 @@ export class SigninComponent {
 
   public hasError: boolean;
 
-  constructor() {}
+  constructor() {
+    this.hasError = false;
+  }
 }

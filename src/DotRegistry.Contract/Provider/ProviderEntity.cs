@@ -18,6 +18,15 @@ namespace DotRegistry.Contract.Provider
 
         }
 
+        /// <summary>
+        /// Get all the categories belonging to this category
+        /// </summary>
+        [JsonProperty(Required = Required.Always, PropertyName = "categories")]
+        public List<string> Categories { get; set; }
+
+        /// <summary>
+        /// Get the number of times the provider has been installed
+        /// </summary>
         [JsonProperty(Required = Required.Always, PropertyName = "installCount")]
 
         public long InstallCount { get; set; }

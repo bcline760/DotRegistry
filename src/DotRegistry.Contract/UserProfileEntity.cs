@@ -71,13 +71,13 @@ namespace DotRegistry.Contract
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty("", Required = Required.AllowNull)]
+        [JsonProperty("modules", Required = Required.AllowNull)]
         public List<string> PublishedModuleSlugs { get; set; }
 
         /// <summary>
         /// Get or set the number of published
         /// </summary>
-        [JsonProperty("", Required = Required.AllowNull)]
+        [JsonProperty("providers", Required = Required.AllowNull)]
         public List<string> PublishedProviderSlugs { get; set; }
 
         /// <summary>
